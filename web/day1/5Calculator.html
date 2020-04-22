@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+    #Div {
+        height: 50px;
+    }
+</style>
+<body>
+<div id="Div" >
+    <input v-model="first" width="100px">
+    <select v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input v-model="second" width="100px">
+    <button @click="cal2">=</button>
+    <input v-model="result" width="100px">
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+            first:0,
+            opt:'*',
+            second:0,
+            result:0
+        },
+        methods:{
+            cal(){
+                switch (this.opt) {
+                    case "*":
+                        this.result=parseInt(this.first)*parseInt(this.second)
+                        break;
+                    case "/":
+                        this.result=parseInt(this.first)/parseInt(this.second)
+                        break;
+                    case "+":
+                        this.result=parseInt(this.first)+parseInt(this.second)
+                        break;
+                    case "-":
+                        this.result=parseInt(this.first)-parseInt(this.second)
+                        break;
+                }
+            },
+            cal2(){
+                var calResult=parseInt(this.first)+this.opt+parseInt(this.second)
+                this.result=eval(calResult);/*将字符串转化成计算  此方法投机取巧开发不建议*/
+            }
+        }
+    })
+</script>
+</body>
+</html>

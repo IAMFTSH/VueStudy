@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+    .blue {
+        color: blue;
+    }
+
+    .thin {
+        font-weight: 200; /*字体粗细*/
+    }
+
+    .italic {
+        font-style: italic; /*斜体*/
+    }
+
+    .active {
+        letter-spacing: 0.5em; /*gogogo变成g o g o g o  字体更大不是字体间隔更大*/
+    }
+</style>
+<body>
+<div id="Div">
+    <p v-text="gogogo" class="active"></p>
+    <p :class="['thin','blue']">使用数组方式，前面:是v-bind:的简写与@是v-on一致</p><!--使用数组方式，前面:是v-bind:的简写与@是v-on一致-->
+    <p :class="['thin',flag?'blue':'']">使用数组方式，flag为变量，可以使用三元表达式</p><!--使用数组方式，flag为变量，可以使用三元表达式-->
+    <p :class="['thin',{'blue':flag}]">使用数组方式，flag为变量</p><!--使用数组方式，flag为变量-->
+    <p :class="{thin:flag,blue:flag}">{}方式，flag为变量</p><!--{}方式，flag为变量-->
+    <p :class="OB">变量方式，需要在date中设置false和true</p><!--变量方式，需要在date中设置false和true-->
+    <p :class=[OB,OB3]>数组变量方式，需要在date中设置false和true</p><!--变量方式，需要在date中设置false和true-->
+
+    <!--内联样式-->
+    <p :style={'color':'red','font-weight':'200'}>内联样式</p>
+    <p :style="OB2">内联样式vue变量</p>
+    <p :style=[OB,OB2]>内联样式+外联+数组vue变量</p>
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+            gogogo: "gogogo",
+            flag: true,
+            OB: {thin: true, blue: false},
+            OB2: {'color': 'red', 'font-weight': '200'},
+            OB3: {italics: true, active: true},
+
+        },
+    })
+</script>
+</body>
+</html>

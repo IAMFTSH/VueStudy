@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.min.js"></script>
+</head>
+<style>
+    [cloak]{
+        display: none;
+    }
+</style>
+<body>
+<div id="app">
+    <p v-cloak>{{ a }}</p>  <!--等同于v-text-->
+    <p v-text="c"></p>
+    <p v-html="b"></p><!--使得b中可以使用html标签-->
+    <button v-bind:title="titleBind+'asd'" v-on:click="al">按钮</button>
+    <!--v-bind:导致这属性值使用变量,变量后面可以加随意值-->
+    <!--v-on绑定方法  onclick的基础上去掉on 其他好像也是这样-->
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            a: 'go',
+            b: '<h1>go2</h1>',
+            c: 'go3',
+            titleBind: "这是焦点显示隐藏信息"
+        },
+        methods: {
+            al (){
+                alert('asd');
+            }
+        }
+    })
+</script><!--数据在下面-->
+</body>
+</html>

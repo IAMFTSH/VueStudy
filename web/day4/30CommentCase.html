@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+</head>
+<body>
+<div id="app">
+    <v-son @up="updateData"></v-son>  <!--父组件传值给子组件-->
+    <ol class="list-group">
+        <li v-for="item in list" :key="item.id" class="list-group-item">
+            <span class="badge">评论人： {{ item.name }}</span>
+            {{ item.content }}
+        </li>
+    </ol>
+</div>
+<template id="tem">
+    <div>
+        <div class="form-group">
+            <label>name</label>
+            <input type="text" class="form-control" v-model="name">
+        </div>
+        <div class="form-group">
+            <label>content</label>
+            <textarea class="form-control" v-model="content"></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn-default btn" @click="postComment">发表</button>
+        </div>
+    </div>
+</template>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            list: [
+                {id: Date.now(), name: '李白', content: '天生我材必有用'},
+                {id: Date.now()+1, name: '江小白', content: '劝君更尽一杯酒'},
+                {id: Date.now()+2, name: '小马', content: '我姓马， 风吹草低见牛羊的马'}
+            ]
+        },
+        components: {
+            vSon: {
+                template: '#tem',
+                data: () => {
+                    return {
+                        name: '',
+                        content: ''
+                    }
+                },
+                methods: {
+                    postComment() {
+                        var dataContent = {id: new Date(), name: this.name, content: this.content}
+                        var list = JSON.parse(localStorage.getItem('cmts') || '[]')      /*取出localStorage*/
+                        list.unshift(dataContent)     /*头部插入数据*/
+                        // 重新保存最新的 评论数据
+                        localStorage.setItem('cmts', JSON.stringify(list))    /*刷新cmts内容*/
+                        this.$emit("up",JSON.parse(localStorage.getItem('cmts') || '[]'))
+                    }
+                }
+            }
+        },
+        methods: {
+            updateData(newData) {
+                console.log('sss')
+                this.list = newData
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div id="Div">
+    <p v-text="list[0]"></p>
+    <p v-text="list[1]"></p>
+    <p>----------------</p>
+    <!--遍历普通数组-->
+    <p v-for="x in list" v-text="x"></p><!--x可以随便设置名字-->
+    <p v-for="(x,i) in list">索引值{{i}}----值{{x}}</p><!--x可以随便设置名字 不知道如何使用V-text-->
+    <p v-for="(x,i) in listMap">索引值"{{i}}----name:{{x.name}}-------id{{x.id}}</p><!--x可以随便设置名字 不知道如何使用V-text-->
+
+    <!--遍历对象-->
+    <p v-for="(val,key,i) in user">key:{{key}}---value:{{val}}---索引值{{i}}</p>
+    <p v-for="count in 10">从1开始迭代数字{{count}}</p>
+    <p v-for="count in 10">从0开始迭代数字{{count-1}}</p>
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+            list:[0,1,2,3,4,5,6,7],
+            listMap:[
+                {name:"zs",id:1},
+                {name:"ls",id:2},
+                {name:'ww',id:3}
+            ],
+            user:{
+                name:'zs',
+                age:11,
+                sex:'girl'
+            }
+        },
+    })
+</script>
+</body>
+</html>

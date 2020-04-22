@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../vue.js"></script>
+<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+<script src="../axios.js"></script>
+<link rel="stylesheet" href="../animate.css">
+<body>
+<div id="app">
+    <my-vue></my-vue>
+</div>
+
+<!--不是放在div中的，不能被html显示的-->
+<template id="asdsad">
+    <div><h4>gogogogoggooggo</h4><h1>asdasd</h1></div>      <!--一定要只有一个组件  要用div包住他们-->
+</template>
+<script>
+    Vue.component('myVue', {
+        template:"#teml"        /*这里红色是idea   bug*/
+    })
+    new Vue({
+        el: '#app'
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../vue.js"></script>
+<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+<script src="../axios.js"></script>
+<link rel="stylesheet" href="../animate.css">
+<style>
+    .ball {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: red;
+    }
+</style>
+<body>
+<div id="app">
+<button class="btn btn-primary" @click="flag=!flag">按钮</button>
+    <hr>
+    <hr><hr><hr><hr><hr><hr>
+
+
+
+
+
+<transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+    <div class="ball" v-show="flag"></div>
+</transition>
+</div>
+
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            flag:false
+        },
+        methods:{
+            beforeEnter(el){
+                el.style.transform='translate(0px,0px)'   //0px,0px是目前坐标
+            },
+            enter(el,done){
+                el.offsetWidth  /*没有发挥真正作用，但是没这货就没动画*/
+                el.style.transform='translate(300px,300px)'
+                el.style.transition="all 0.5s ease"
+                done();/*如果没这个，球到终点后要等一段时间才会消失*/
+            },
+            afterEnter(el){
+                this.flag=!this.flag
+            }
+        }
+    })
+</script>
+</body>
+</html>

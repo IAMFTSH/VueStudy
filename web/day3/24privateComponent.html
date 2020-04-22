@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+        },
+
+
+        beforeCreate(){},/*数据方法都不能用   只有一些默认方法和生命周期*/
+        Create(){},/*可以用数据和方法*/
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../vue.js"></script>
+<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+<script src="../axios.js"></script>
+<body>
+<div id="app">
+    <my-private></my-private>
+</div>
+<template id="ddd">  <!--这个不要放在有Vue对象对应的div中-->
+    <div>
+        <h1>私有摸版</h1>
+    </div>
+</template>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        filter:{},
+        directives:{},/*自定义v-asdasdasdas   */
+        components:{/*私有组件*/           /*+s啊啊啊啊啊  过滤器和el和data不用+s*/
+            myPrivate:{
+                template:"#ddd"
+            }
+        },
+
+
+        beforeCreate(){},/*数据方法都不能用   只有一些默认方法和生命周期*/
+        Create(){},/*可以用数据和方法*/
+        beforeMount(){},
+        mounted(){},  /*可以修改html中参数了*/
+        beforeUpdate(){},/*修改前  vue中值已经变化，但是html没有变*/
+        update(){}, /*变了*/
+        beforeDestroy(){},
+        destroy(){}
+    })
+</script>
+</html>

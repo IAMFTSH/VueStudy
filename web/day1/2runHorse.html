@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <p v-html="a"></p>
+    <button v-bind:title="titleBind+'asd'" @click="run">按钮</button>
+    <button v-bind:title="titleBind+'asd'" @click="stop">按钮</button>
+    <!--v-bind:导致这属性值使用变量,变量后面可以加随意值-->
+    <!--v-on绑定方法  onclick的基础上去掉on 其他好像也是这样-->
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            a: '这是焦点显示隐藏信息',
+            titleBind: "这是焦点显示隐藏信息",
+            interval:null
+        },
+        methods: {
+            run() {
+                if(this.interval==null){
+                this.interval=setInterval(() => { /*interval（方法，毫秒）根据时间间隔调用方法*/  /*=>匿名方法，使得this是上层的vue*/
+                        var start = this.a.substring(0, 1)
+                        var end = this.a.substring(1)
+                        this.a = end + start;
+                    }, 100)
+            }},
+            stop() {
+                clearInterval(this.interval)
+                this.interval=null
+            }
+        }
+    })
+</script><!--数据在下面-->
+</body>
+</html>

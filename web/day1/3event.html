@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+    #Div {
+        height: 50px;
+        width: 50px;
+        background-color: red;
+    }
+</style>
+<body>
+<!--<div id="Div" @click="divClick">
+    <button @click.stop="btn">按钮</button>&lt;!&ndash;.stop是防止按下button也会按下div的击穿（冒泡）&ndash;&gt;
+</div>-->
+<!--<div id="Div" @click.capture="divClick">
+    <button @click="btn">按钮</button>&lt;!&ndash;.capture是捕获按钮，按btn按钮，先触发div的再btn的（冒泡）&ndash;&gt;
+</div>-->
+<div id="Div" @click.self="divClick"><!--.self是只有点击自己的时候才会触发按钮，应用在多个button时免得多个.stop 如果上层有div的话，点击btn还会冒泡到上层div -->
+    <button @click.once="btn">按钮</button><!--.once是只会触发一次按钮-->
+    <a href="https://www.baidu.com" @click.prevent="consoleFun">baidu</a><!--阻止默认程序，比如form表单中的summit提交按钮，会自己提交-->
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+        },
+        methods: {
+            btn() {
+                console.log("btn")
+            },
+            divClick() {
+                console.log("Div")
+            },
+            consoleFun(){
+                alert("gogo")
+            }
+        }
+    })
+</script>
+</body>
+</html>

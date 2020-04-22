@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-arge="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+<style>
+</style>
+<body>
+<!--
+https://cn.vuejs.org/v2/guide/custom-directive.html
+详细教程在这
+要和这里的结合看，更好理解
+
+
+
+-->
+<div class="table-responsive">
+    <div id="app">
+        <div class="panel panel-primary"><!--bs3-->
+            <div class="panel-heading">
+                <h3 class="panel-title">这辈子都买不起的车的</h3>
+            </div>
+            <div class="panel-body form-inline">
+
+                <label>
+                    Id<input type="text" class="form-control" v-model="id" v-focus>
+                </label>
+                <label>
+                    品牌:<input type="text" class="form-control" v-model="name" v-arge:foo="'blue'">  <!--多个参数或许可以试试{}对象 foo是binding（形参）中的arg-->
+                    <!--记得加单引号,foo是传指令的参数-->
+                </label>
+                <input type="button" value="添加" class="btn btn-primary"/>
+                <label>
+                    品牌关键字搜索:<input type="text" class="form-control" v-model="keyWord" v-privateeee>
+                </label>
+                <label>
+                    品牌关键字搜索:<input type="text" class="form-control"  v-asdasd>
+                </label>
+
+            </div>
+            <p v-dsadsa="'100'">asdasdsad</p>
+        </div>
+    </div>
+</div>
+<script>
+    /*调用时需要+v-  focus指令v-focus  参数2是对象  对象内是指令相关函数，函数特定情况执行特定操作*/
+    Vue.directive('focus', {/*全局不需要+s  局部定义要加s*/
+        // 当被绑定的元素插入到 DOM 中时……el使用v-focus的那个Dom元素,第一个参数永远是el,使用其他名字出错
+        inserted: function (el) {
+            // 插入Dom时生效，js最好给插入
+            el.focus()
+            /*无效*/
+            /*            el.style.color='red'*/
+        },
+        update: function (el) {
+            // 更新时生效
+            /*            el.focus()*/
+        }
+    }),
+        Vue.directive('arge', {
+            bind: function (el, binding1111, vnode) {/*每当指令绑定到元素上时生效*/  /*第二个是形参，可以随便改名字*/
+                /*这个并没有让聚焦生效，真正让生效是inserted那个*/
+                /*            el.focus()*/
+                /*            下面的生效了，样式只要bind就可以生效*/
+                /*            el.style.color='red'*/
+                el.style.color = binding1111.value
+                console.log(binding1111.name)
+                console.log(binding1111.value)
+                console.log(binding1111.expression)
+                console.log(binding1111.arg)
+                console.log(binding1111.modifiers)
+                console.log(Object.keys(vnode).join(', '))
+
+                /*指令钩子函数会被传入以下参数：
+
+    el：指令所绑定的元素，可以用来直接操作 DOM。
+    binding：一个对象，包含以下属性：
+    name：指令名，不包括 v- 前缀。
+    value：指令的绑定值，例如：v-my-directive="1 + 1" 中，绑定值为 2。
+    oldValue：指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。
+    expression：字符串形式的指令表达式。例如 v-my-directive="1 + 1" 中，表达式为 "1 + 1"。
+    arg：传给指令的参数，可选。例如 v-my-directive:foo 中，参数为 "foo"。
+    modifiers：一个包含修饰符的对象。例如：v-my-directive.foo.bar 中，修饰符对象为 { foo: true, bar: true }。
+    vnode：Vue 编译生成的虚拟节点。移步 VNode API 来了解更多详情。
+    oldVnode：上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+    */
+
+            },
+        }),
+        Vue.directive("asdasd",function (el) {   /*简写方式   相当于写了bind和update*/
+            el.style.color='yellow'
+        })
+        /*bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+         inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+
+        update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。*/
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                keyWord: ''
+            },
+            directives: {
+                /*   id:  */
+                privateeee: {
+                    function(el) {
+                        el.style.color = 'red'
+                    }
+                },
+                dsadsa:function (el,args) {/*args是形参*/
+                    /*简写*/
+                    el.style.fontSize=parseInt(args.value)+'px'
+                }
+            }
+        })
+</script>
+</div>
+</body>
+</html>

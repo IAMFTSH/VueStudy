@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../vue.js"></script>
+<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+<script src="../axios.js"></script>
+<link rel="stylesheet" href="../animate.css">
+<!--https://daneden.github.io/animate.css/  效果查看-->
+<!--fading不用找效果了你喜欢这个-->
+<body>
+<div id="app">
+    <!--    <div class="form-inline">&lt;!&ndash;输入框在同一行&ndash;&gt;-->
+    <label>
+        <button class="btn-primary btn" @click="(flag1=!flag1)">无动画</button>
+        <h3 v-show="flag1">吴东华</h3></label><!--</div>-->
+    <hr>
+    <button class="btn-primary btn" @click="(flag2=!flag2)">有动画</button>
+    <!--设置动画时间-->
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" :duration="1000"><H3 v-show="flag2">有动画</H3></transition>  <!--需要这个标签才能动画生效-->
+    <hr>
+    <button class="btn-primary btn" @click="(flag3=!flag3)">toY-动画</button>
+    <transition><H3 v-show="flag3">toY-动画</H3></transition>  <!--需要这个标签才能动画生效-->
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag1: true,
+            flag2: true,
+            flag3: true
+        }
+    })
+</script>
+</body>
+</html>

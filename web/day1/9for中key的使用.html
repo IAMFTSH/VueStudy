@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div id="Div">
+    <input type="text" v-model="Id"><br/>
+    <input type="text" v-model="Name"><br/>
+    <button @click="add">add</button>
+    <button @click="addUnshift">addUnshift</button>
+    <p v-for="item in listMap">
+        <input type="checkbox">
+        {{item.id}}------{{item.name}}
+    </p>
+
+    --------------------------------
+    <!--避免使用非原始值作为键，而是使用字符串/数字值,下面这样会报错，但是可以避免选中值变化-->
+<!--    <p v-for="item in listMap" :key="item">
+        <input type="checkbox">
+        {{item.id}}&#45;&#45;&#45;&#45;&#45;&#45;{{item.name}}
+    </p>-->
+    --------------------------------
+    <!--如果后续添加重复id会报错检测到重复的密钥：“ 重复的ID”。 这可能会导致更新错误-->
+<!--    <p v-for="item in listMap" :key="item.id    ">
+        <input type="checkbox">
+        {{item.id}}&#45;&#45;&#45;&#45;&#45;&#45;{{item.name}}
+    </p>-->
+    --------------------------------
+    <!--使用索引值id   可能出现未知问题-->
+
+    <p v-for="(item,i) in listMap" :key="i">
+        <input type="checkbox">
+        {{item.id}}------{{item.name}}
+    </p>
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+            listMap: [
+                {name: "zs", id: 1},
+                {name: "ls", id: 2},
+                {name: 'ww', id: 3}
+            ],
+            Name:'',
+            Id:''
+        },
+        methods:{
+            add(){
+                this.listMap.push({name:this.Name,id:this.Id})
+            },
+            addUnshift(){
+                this.listMap.unshift({name:this.Name,id:this.Id})
+                /*unshift() 方法将把它的参数插入 arrayObject 的头部，并将已经存在的元素顺次地移到较高的下标处，以便留出空间。*/
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+</head>
+
+<style>
+    .v-enter, .v-leave-to {
+        opacity: 0;      /*动画卡住的时间*/
+        transform: translateX(50px);   /*最后字母X   x轴方向50px*/
+    }
+
+    .v-enter-active, .v-leave-active {
+        transition: all 0.4s ease;
+    }
+</style>
+
+
+<body>
+<div id="app">
+    <button @click="comID='vLogin'">登录</button>      <!--**************-->
+    <button @click="comID='vRegister'">注册</button>
+    <transition mode="out-in">   <!--记得加这个out-in    无法解决list动画问题  因为那个是一起移动的，这个是让一个出去另一个进来-->
+    <component :is="comID"></component>   <!--:is里面填的是变量名-->
+    </transition>
+</div>
+<template id="Login">
+    <h1>登录</h1>
+</template>
+<template id="Register">
+    <H1>注册</H1>
+</template>
+</body>
+<script>
+    Vue.component('vLogin',{
+        template:"#Login",
+    })
+    Vue.component('vRegister',{
+        template:'#Register',
+    })
+    new Vue({
+        el:'#app',
+        data:{
+            comID:'vLogin'
+        },
+        methods:{
+        }
+    })
+</script>
+</html>

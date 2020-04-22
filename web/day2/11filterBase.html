@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+<style>
+</style>
+<body>
+<div class="table-responsive">
+    <div id="app">
+        <p>{{msg | filterID(2222)}}</p>
+        <p>{{msg | filterID(2222)|filterID2}}</p>
+    </div>
+</div>
+<script>
+    /*替换单个*/
+/*    Vue.filter('filterID',function (msg) {
+        return msg.replace('善良','邪恶')
+    })*/
+    /*替换多个使用正则表达式,function可以加参数*/
+    Vue.filter('filterID',function (msg,dd) {
+        return msg.replace(/善良*/g,'邪恶'+dd)
+    })
+    /*多个过滤*/
+    Vue.filter('filterID2',function (msg) {
+        return msg+'过滤2'
+    })
+    var vm=new Vue({
+        el: '#app',
+        data:{
+            msg:'我善良我善良我善良我善良'
+        }
+    })
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+    #Div {
+        height: 50px;
+    }
+</style>
+<body>
+<div id="Div" >
+    <p v-text="msg"></p>
+    <!--v-model可以改变Vue对象中msg的值 导致其他两个msg都发生变化，但是v-bind:value不行 -->
+    <input type="text" v-model="msg">
+    <input type="text" v-bind:value="msg">
+</div>
+<script>
+    new Vue({
+        el: '#Div',
+        data: {
+            msg:'通过input，select等改变这里的值（）'
+        }
+    })
+</script>
+</body>
+</html>

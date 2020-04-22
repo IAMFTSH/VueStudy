@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+    <script src="../vue-router.js"></script>
+</head>
+
+<style>
+    .v-enter, .v-leave-to {
+        opacity: 0; /*动画卡住的时间*/
+        transform: translateX(50px); /*最后字母X   x轴方向50px*/
+    }
+
+    .v-enter-active, .v-leave-active {
+        transition: all 0.4s ease;
+    }
+/*.myactive
+ {
+    color: red;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 80px;
+    text-decoration: underline;
+    background-color: green;
+}*/
+</style>
+
+
+<body>
+<div id="app">
+    <!-- <a href="#/login">登录</a> -->
+    <!-- <a href="#/register">注册</a> -->
+    <v-login></v-login>
+    <!-- router-link 默认渲染为一个a 标签 -->
+    <router-link to="/vLogin" tag="span">登录</router-link>      <!--tag 改头换面-->
+    <router-link to="/vRegister">注册</router-link>
+
+
+    <!-- 这是 vue-router 提供的元素，专门用来 当作占位符的，将来，路由规则，匹配到的组件，就会展示到这个 router-view 中去 -->
+    <!-- 所以： 我们可以把 router-view 认为是一个占位符 -->
+    <transition mode="out-in">    <!--出完在进-->
+        <router-view></router-view>
+    </transition>
+
+</div>
+<template id="Login">
+    <h1>登录</h1>
+</template>
+<template id="Register">
+    <H1>注册</H1>
+</template>
+</body>
+<script>
+    var vLogin=Vue.component('vLogin',{            /*不写前面的，router认识不了，因为必须对象       不写后面不能用<v-Login>*/
+        template: "#Login",
+    })
+    var vRegister=Vue.component('vRegister',{
+        template: '#Register',
+    })
+    /*导入 vue-router 包之后，在 window 全局对象中，就有了一个 路由的构造函数，叫做 VueRouter*/
+    var vueRouterObj = new VueRouter({
+        // route // 这个配置对象中的 route 表示 【路由匹配规则】 的意思
+
+
+        routes: [       /*加S啊*/
+            // 每个路由规则，都是一个对象，这个规则对象，身上，有两个必须的属性：
+            //  属性1 是 path， 表示监听 哪个路由链接地址；随便填和上面对应就可以了
+            //  属性2 是 component， 表示，如果 路由是前面匹配到的 path ，则展示 component 属性对应的那个组件
+            // 注意： component 的属性值，必须是一个 组件的模板对象， 不能是 组件的引用名称(直接写<XXX>里面的XXX不要引号 而且是看看组件创建 必须使用var)；
+            { path: '/', redirect: '/vlogin' }, // 这里的 redirect 和 Node 中的 redirect 完全是两码事    这里重定向到/login
+            {path: '/vLogin', component: vLogin},
+            {path: '/vRegister', component: vRegister},
+        ],
+        linkActiveClass: 'myactive'      /*显示组件默认class+router-link-active（好像不能修改），现在这个加上myactive*/
+    })
+    new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        router: vueRouterObj // 将路由规则对象，注册到 vm 实例上，用来监听 URL 地址的变化，然后展示对应的组件
+    })
+</script>
+</html>

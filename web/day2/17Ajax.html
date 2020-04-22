@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <!--resource.js要在vue.js后面-->
+    <script src="../axios.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <button @click="getInfo" class="btn btn-primary">get请求</button>
+    <button @click="postInfo" class="btn btn-primary">post请求</button><!--失败-->
+    <button @click="getPhoto" class="btn btn-primary">get请求照片</button>
+    <button @click="axiosAll" class="btn btn-primary">axiosAll</button>
+    <button @click="cusAxios" class="btn btn-primary">cusAxios</button>
+    <img v-bind:src="photoImgUrl" style="height: 200px;width: 100px;">
+    <p>GET: {{info}}</p>
+    <p>POST: {{pinfo}}</p>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            info: '',
+            pinfo: '',
+            photoImgUrl: '',
+            testAxiosAll: '',
+        },
+        methods: {
+
+            /*axios.get('url',[参数]).then(成功后执行).catch(失败后执行)*/
+
+            getInfo() {
+                axios
+                    .get('https://jsonplaceholder.typicode.com/todos/1')
+                    .then(response => (
+                        this.info = response.data)
+                    )
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            /*这里用不上post*/
+            postInfo() {
+                axios.post('https://jsonplaceholder.typicode.com/photos', {
+                    id: 1
+                })
+                    .then(response => this.pinfo = response.data)
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            getPhoto() {
+                axios.get('https://jsonplaceholder.typicode.com/photos/1', {})
+                    .then(response => this.photoImgUrl = response.data.url)
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+
+            /*并发请求*/
+            axiosAllOfOne() {
+                return axios.get("../response/json_demo.json.html")
+            },
+            axiosAllOfTwo() {
+                return axios.get('http://www.liulongbin.top:3005/api/getlunbo')
+            },
+            /*数组，需要加this，axios.spread*/
+            axiosAll() {
+                axios.all([this.axiosAllOfOne(), this.axiosAllOfTwo()]).then(axios.spread(function (data1, data2) {
+                    console.log("One" + data1.data.name)
+                    console.log("Two" + data2.data.id)
+                })).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                })
+            },
+
+            /*自定义axios 请求   （可以调整一些属性）*/
+            cusAxios() {
+                var axiosObject = axios.create({
+                    url: '../response/json_demo.json.html',
+                    timeout: 3000,
+                    method: 'get',
+                    params: {
+                        type: 'top'
+                    }
+                })
+                axiosObject.interceptors.request.use(function (config) {   /*拦截器  这里相当于发送了一次get/post */
+                    // 在发送请求之前做些什么
+                    console.log('这里可以播放动画')
+                    return config;
+                }, function (error) {
+                    // 对请求错误做些什么
+                    return Promise.reject(error);
+                });
+                console.log('这里可以播放动画') /*axiosObject.get().then()*/
+                axiosObject.request().then(response=>  {
+                    /*处理返回结果*/
+                }).catch(function (error) {
+                    /*错误结果*/
+                })
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>

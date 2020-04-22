@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">品牌2</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label>
+                <span>名字:</span>
+                <input type="text" name="name" class="form-control" v-model="Name" title="">
+            </label>
+            <button class="btn btn-primary" @click="add">添加</button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+            <th>Id</th>
+            <th>品牌</th>
+            <th>添加时间</th>
+            <th>操作</th>
+            </thead>
+            <tbody class="active">
+            <tr v-for="item in list" :key="item.id">
+                <td>{{item.id}}</td>
+                <td v-text="item.name"></td>
+                <td v-html="item.ctime"></td>
+                <td>
+                    <button class="btn btn-default" @click="del(item.id)">删除</button>
+                    <!--delete是关键字不能用-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+/*    axios.options.root='http://www.liulongbin.top:3005/'         axios没有这功能*/
+    axios.defaults.baseURL='http://www.liulongbin.top:3005/'/*是这个*/
+    new Vue({
+        el: '#app',
+        data: {
+            list: [],
+            Name: ''
+        },
+        methods: {
+            add() {
+                /*注意前面加了/会用自家地址拼接*/
+                axios.post('api/addproduct', {name: this.Name})
+                    .then(response => {
+                        if (response.data.status === 0) {
+                            this.getAllProdList()
+                            console.log("success")
+                        }
+                    })
+                    .catch(function (Error) {
+                        alert("Error")
+                        console.log("Not success")
+                    })
+            },
+            del(id) {
+                axios.get('api/delproduct/' + id/*, {
+                    : id
+                }*/).then(response => {
+                    if (response.data.status === 0) {
+                        this.getAllProdList()
+                    } else {
+                        alert("Error")
+                    }
+                })
+                /*.some是找到一个true就停止   .every是遇到一个flase就停止*/
+                /*方法  splice*/
+
+                /*方法arr.includes(searchElement, fromIndex)   包含就是小的是子集的意思*/
+                /*filter过滤掉不是true的item*/
+            },
+            getAllProdList() {
+                axios.get('api/getprodlist').then(response => {
+                    this.list = response.data.message
+                    /*                    response.data.message.forEach(item => {
+                                            this.list
+                                            this.list.push(item);
+                                        })*/
+                })
+            }
+        },
+        created() {
+            this.getAllProdList()
+        }
+    })
+</script>
+</div>
+</body>
+
+</html>

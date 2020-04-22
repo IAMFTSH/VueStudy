@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+</head>
+<body>
+<div id="app">
+    <component-data></component-data>
+    <hr>
+    <component-data></component-data>
+    <hr>
+    <component-data></component-data>
+</div>
+
+<template id="aaaaaaaa">  <!--这个不要放在有Vue对象对应的div中-->
+    <div>
+        <button class="btn-default" @click="add">+</button>
+        <label>{{msg}}</label>
+    </div>
+</template>
+</body>
+<script>
+    Vue.component("componentData", {
+        template: "#aaaaaaaa",
+        data:  ()=> {
+            return {
+                msg: 0
+            }         /*要加{}*/
+        },
+        methods:{
+            add(){
+                this.msg++;       /*this 要this  自己的msg  不然会用到Vue中app对应的msg*/
+            }
+        }
+    })
+    var vm = new Vue({
+        el: '#app'
+    })
+</script>
+</html>

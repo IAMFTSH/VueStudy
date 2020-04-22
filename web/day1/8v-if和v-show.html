@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div id="app">
+    <button @click="toggle">拨动</button>     <!--拨动-->
+    <!--两个区别-->
+    <p v-if="flag">v-if</p><!--直接删除和直接创建，性能消耗高   ,两种都会影响布局可能导致布局变化-->
+    <p v-show="flag">v-show</p><!--设置display成隐藏，如果文件开始是隐藏的，且可能永远隐藏，使用if初始渲染更好-->
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            flag:false
+        },
+        methods:{
+            toggle() {
+                this.flag = !this.flag
+            }
+        }
+    })
+</script>
+</body>
+</html>

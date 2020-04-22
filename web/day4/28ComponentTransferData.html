@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../axios.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-father-transfer-s-on :parentmsg="comID" :go="go"></my-father-transfer-s-on>  <!--父组件传值给子组件-->
+</div>
+<template id="tem">
+    <div>
+    <h1>{{parentmsg}}---------{{go}}</h1>
+    <button @click="go=1"></button>        <!--能改变值但是后台会报错   非常不建议改值 ，不然使用子组件data    父组件数据只读-->
+    </div>
+</template>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            comID: 'vLogin',
+            go:'ggogogoogogogo'
+        },
+        components:{
+          myFatherTransferSOn:{
+              template:'#tem',
+              props:['parentmsg','go']         /*值随便取但是不能大写和下划线*/
+          },
+            methods:{
+            }
+        },
+        methods: {
+
+        }
+    })
+</script>
+</html>
